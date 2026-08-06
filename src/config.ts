@@ -3,6 +3,7 @@ export interface InstagramConfig {
   apiBase: string;
   userProfilePath: string;
   userFeedPath: string;
+  postInfoPath: string;
   maxRetries: number;
   baseRetryDelayMs: number;
   maxRetryDelayMs: number;
@@ -22,6 +23,7 @@ export const DEFAULT_CONFIG: InstagramConfig = {
   apiBase: "https://i.instagram.com/api/v1",
   userProfilePath: "users/web_profile_info",
   userFeedPath: "feed/user/{username}/username",
+  postInfoPath: "media/{mediaId}/info",
   maxRetries: 5,
   baseRetryDelayMs: 1000,
   maxRetryDelayMs: 30000,

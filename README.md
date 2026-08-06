@@ -129,9 +129,25 @@ do {
 console.log(`Fetched ${allPosts.length} posts`);
 ```
 
+### Get single post info
+
+Pass any Instagram post/reel URL to get that one post (media id is resolved from the URL's shortcode automatically):
+
+```ts
+const result = await instagram.getPostInfo("https://www.instagram.com/reel/B-0AY7oJ4cX/");
+
+if (result.success) {
+  console.log(result.data.mediaType, result.data.downloadUrls);
+} else {
+  console.error(result.error.code, result.error.message);
+}
+```
+
+Supports `p`, `reel`, `reels` and `tv` URLs.
+
 ### Convenience exports
 
-`getInstagramPosts(username, options)`, `getAllInstagramPosts(username, options)` and `getInstagramUser(username)` are also exported and use the default configuration.
+`getInstagramPosts(username, options)`, `getAllInstagramPosts(username, options)`, `getInstagramPost(url)` and `getInstagramUser(username)` are also exported and use the default configuration.
 
 ## Custom configuration
 
@@ -185,6 +201,9 @@ Every call returns a discriminated union. Failures include a typed error:
 | `UNKNOWN_ERROR`  | Anything else                                      | varies    |
 
 ## Changelog
+
+### 0.0.3
+- Added `getPostInfo` / `getInstagramPost` — fetch a single post/reel by URL (shortcode → media id conversion built in)
 
 ### 0.0.2
 - Added `getAllPosts` / `getAllInstagramPosts` — auto-fetch an entire account's posts with no count required

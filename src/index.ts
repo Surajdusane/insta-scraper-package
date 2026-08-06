@@ -10,4 +10,5 @@ const defaultScraper = createInstagramScraper();
 
 export const getInstagramPosts = defaultScraper.getPosts;
 export const getAllInstagramPosts = defaultScraper.getAllPosts;
+export const getInstagramPost = defaultScraper.getPostInfo;
 export const getInstagramUser = defaultScraper.getUserInfo;

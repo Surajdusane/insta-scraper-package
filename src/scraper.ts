@@ -1,8 +1,10 @@
 import type { InstagramConfig } from "./config";
 import { resolveConfig } from "./config";
 import { fetchAllUserPosts, fetchUserPosts } from "./services/posts";
+import { fetchSinglePostInfo } from "./services/single-post";
 import { fetchUserInfo } from "./services/user";
-import type { PostsFetchOptions, PostsResult } from "./types/post";
+import type { InstagramResult } from "./types/error";
+import type { InstagramPost, PostsFetchOptions, PostsResult } from "./types/post";
 import type { UserInfoResult } from "./types/user";
 
 export interface InstagramScraper {
@@ -12,6 +14,7 @@ export interface InstagramScraper {
     username: string,
     options?: Omit<PostsFetchOptions, "count" | "nextMaxId">,
   ): Promise<PostsResult>;
+  getPostInfo(url: string): Promise<InstagramResult<InstagramPost>>;
   getUserInfo(username: string): Promise<UserInfoResult>;
 }
 
@@ -21,6 +24,7 @@ export function createInstagramScraper(config: Partial<InstagramConfig> = {}): I
     config: resolved,
     getPosts: (username, options = {}) => fetchUserPosts(username, resolved, options),
     getAllPosts: (username, options = {}) => fetchAllUserPosts(username, resolved, options),
+    getPostInfo: (url) => fetchSinglePostInfo(url, resolved),
     getUserInfo: (username) => fetchUserInfo(username, resolved),
   };
 }
