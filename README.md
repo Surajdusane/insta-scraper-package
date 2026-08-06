@@ -153,6 +153,20 @@ const instagram = createInstagramScraper({
 
 `DEFAULT_CONFIG` and `resolveConfig()` are exported for inspection and extension.
 
+## Troubleshooting
+
+### 400 error: `ig_business_category_subvertical has been deleted`
+
+Some **business/professional accounts** (those with a business category set) return a 400 with this message. It is a server-side issue: Instagram removed an internal schema asset that older app versions reference. Fix by using a **current Instagram app version** in the user agent:
+
+```ts
+const instagram = createInstagramScraper({
+  appUserAgent: "Instagram 439.0.0.35.60 Android (30/11; 480dpi; 1080x2340; OnePlus; ONEPLUS A5010; OnePlus5; qcom; en_US; 458229237)",
+});
+```
+
+The package ships with a recent version by default; if you ever hit this error again, bump the version number in `appUserAgent` to the latest (check whatmyuseragent.com/apps/mobile-app-instagram).
+
 ## Error handling
 
 Every call returns a discriminated union. Failures include a typed error:
@@ -176,6 +190,7 @@ Every call returns a discriminated union. Failures include a typed error:
 - Added `getAllPosts` / `getAllInstagramPosts` — auto-fetch an entire account's posts with no count required
 - Added `nextMaxId` as an input option to resume scraping from a previous cursor
 - Batch size is now fixed internally at 12 (Instagram's feed batch) and removed from config/options
+- Updated default `appUserAgent` to a current Instagram version (fixes the `ig_business_category_subvertical` 400 on business accounts)
 - Added `license` and `keywords` to `package.json`
 
 ### 0.0.1
