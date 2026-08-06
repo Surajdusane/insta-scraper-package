@@ -1,0 +1,40 @@
+{
+  "name": "insta-scraper-package",
+  "version": "0.0.2",
+  "description": "Type-safe Instagram scraper (profile + posts) for Chrome extensions",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist"],
+  "keywords": [
+    "instagram",
+    "scraper",
+    "chrome-extension",
+    "manifest-v3",
+    "cookies",
+    "typescript"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "bun run scripts/build.ts",
+    "dev": "bun --watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "prepublishOnly": "bun run build"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
