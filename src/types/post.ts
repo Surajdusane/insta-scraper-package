@@ -14,7 +14,7 @@ export interface InstagramPost {
   duration: number;
   url: string;
   downloadUrls: string[];
-  thumbnail?: string;
+  thumbnail: string;
 }
 
 export interface PostsProgress {

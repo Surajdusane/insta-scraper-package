@@ -21,6 +21,7 @@ describe("parsePost", () => {
     expect(post?.code).toBe("ABC123");
     expect(post?.mediaType).toBe("image");
     expect(post?.downloadUrls).toEqual(["https://cdn.example/1.jpg"]);
+    expect(post?.thumbnail).toBe("https://cdn.example/1.jpg");
     expect(post?.url).toBe("https://www.instagram.com/p/ABC123/");
     expect(post?.caption).toBe("hello world");
     expect(post?.likes).toBe(10);

@@ -5,7 +5,7 @@ Type-safe TypeScript library for scraping Instagram profile info and posts from 
 ## Features
 
 - Scrape a user's profile info: followers, following, post count, profile picture, bio, verification status
-- Scrape a user's posts with automatic pagination: images, videos and carousels, with download URLs
+- Scrape a user's posts with automatic pagination: images, videos and carousels, with download URLs and a thumbnail preview URL
 - Auto-fetch every post of an account with a single `getAllPosts` call
 - Type-safe: strict discriminated-union results, no `null` surprises
 - Fully configurable: retries, timeouts, request delays, cookie domains, user agents and API endpoints can all be customized
@@ -73,7 +73,7 @@ const result = await instagram.getPosts("someusername", {
 
 if (result.success) {
   for (const post of result.posts) {
-    console.log(post.mediaType, post.downloadUrls, post.url);
+    console.log(post.mediaType, post.downloadUrls, post.thumbnail, post.url);
   }
   if (result.hasMore) {
     console.log("more available", result.nextMaxId);
@@ -138,6 +138,7 @@ const result = await instagram.getPostInfo("https://www.instagram.com/reel/B-0AY
 
 if (result.success) {
   console.log(result.data.mediaType, result.data.downloadUrls);
+  console.log(result.data.thumbnail);
 } else {
   console.error(result.error.code, result.error.message);
 }
@@ -201,6 +202,12 @@ Every call returns a discriminated union. Failures include a typed error:
 | `UNKNOWN_ERROR`  | Anything else                                      | varies    |
 
 ## Changelog
+
+`InstagramPost.thumbnail` is always a string: the post's cover image URL when available, otherwise `""`.
+
+### 0.0.4
+- `InstagramPost.thumbnail` is now always present (a `string`) — falls back to `""` when no thumbnail is available
+- Added `"DOM"` to the TypeScript `lib` so `AbortSignal`/`fetch` types resolve cleanly in editors and for consumers without `@types/bun`
 
 ### 0.0.3
 - Added `getPostInfo` / `getInstagramPost` — fetch a single post/reel by URL (shortcode → media id conversion built in)
