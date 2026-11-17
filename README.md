@@ -137,6 +137,7 @@ Pass any Instagram post/reel URL to get that one post (media id is resolved from
 const result = await instagram.getPostInfo("https://www.instagram.com/reel/B-0AY7oJ4cX/");
 
 if (result.success) {
+  console.log(result.data.username);       // post owner's username
   console.log(result.data.mediaType, result.data.downloadUrls);
   console.log(result.data.thumbnail);
 } else {
@@ -203,7 +204,10 @@ Every call returns a discriminated union. Failures include a typed error:
 
 ## Changelog
 
-`InstagramPost.thumbnail` is always a string: the post's cover image URL when available, otherwise `""`.
+`InstagramPost.thumbnail` is always a string: the post's cover image URL when available, otherwise `""`. `InstagramPost.username` is the post owner's username.
+
+### 0.0.5
+- Added `InstagramPost.username` — the post owner's username, always present (a `string`) in `getPostInfo` / `getPosts` results
 
 ### 0.0.4
 - `InstagramPost.thumbnail` is now always present (a `string`) — falls back to `""` when no thumbnail is available

@@ -10,6 +10,7 @@ const imagePost = {
   caption: { text: "hello world" },
   like_count: 10,
   comment_count: 2,
+  user: { pk: "123", username: "testuser" },
   image_versions2: { candidates: [{ url: "https://cdn.example/1.jpg" }] },
 };
 
@@ -24,6 +25,7 @@ describe("parsePost", () => {
     expect(post?.thumbnail).toBe("https://cdn.example/1.jpg");
     expect(post?.url).toBe("https://www.instagram.com/p/ABC123/");
     expect(post?.caption).toBe("hello world");
+    expect(post?.username).toBe("testuser");
     expect(post?.likes).toBe(10);
     expect(post?.comments).toBe(2);
     expect(post?.timestamp).toBe(1700000000);
@@ -97,6 +99,14 @@ describe("parsePost", () => {
       DEFAULT_CONFIG,
     );
     expect(post?.code).toBe("GHI");
+  });
+
+  test("falls back to owner for username", () => {
+    const post = parsePost(
+      { id: "4", code: "JKL", owner: { username: "owneruser" }, image_versions2: { candidates: [{ url: "u.jpg" }] } },
+      DEFAULT_CONFIG,
+    );
+    expect(post?.username).toBe("owneruser");
   });
 });
 

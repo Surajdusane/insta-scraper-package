@@ -43,10 +43,14 @@ export function parsePost(raw: unknown, config: InstagramConfig): InstagramPost 
 
   const code = asString(item["code"] || item["shortcode"]);
   const id = asString(item["id"] || item["pk"]);
+  const username = asString(
+    asRecord(item["user"])?.["username"] ?? asRecord(item["owner"])?.["username"],
+  );
 
   return {
     id,
     code,
+    username,
     timestamp: asNumber(item["taken_at"] ?? item["timestamp"]),
     mediaType,
     caption: parseCaption(item["caption"]),

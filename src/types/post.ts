@@ -5,6 +5,7 @@ export type InstagramMediaType = "image" | "video" | "carousel";
 export interface InstagramPost {
   id: string;
   code: string;
+  username: string;
   timestamp: number;
   mediaType: InstagramMediaType;
   caption: string;
